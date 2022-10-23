@@ -49,8 +49,8 @@ public class ProductDaoImpl implements ProductDao {
 
         Map<String, Object> map = new HashMap<>();
         map.put("productName", productRequest.getProductName());
-        System.out.println("1:" + productRequest.getCategory());//CAR(ENUM)
-        map.put("category", productRequest.getCategory().toString());//enum to string
+        System.out.println("1:" + productRequest.getCategory());//CAR(productCategory)
+        map.put("category", productRequest.getCategory().toString());//必須轉成string存到資料庫才不會出現問題
         map.put("imgUrl", productRequest.getImgUrl());
         map.put("price", productRequest.getPrice());
         map.put("stock", productRequest.getStock());
@@ -68,5 +68,29 @@ public class ProductDaoImpl implements ProductDao {
         int productId = keyHolder.getKey().intValue();
 
         return productId;
+    }
+
+    @Override
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+
+        String sql = "update product set product_name = :productName, " +
+                "category = :category, image_url = :imgUrl, price = :price, " +
+                "stock = :stock, description = :description, " +
+                "last_modified_date = :lastModifiedDate where " +
+                "product_id = :productId";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("productName", productRequest.getProductName());
+        map.put("category", productRequest.getCategory().toString());
+        map.put("imgUrl", productRequest.getImgUrl());
+        map.put("price", productRequest.getPrice());
+        map.put("stock", productRequest.getStock());
+        map.put("description", productRequest.getDescription());
+
+        map.put("lastModifiedDate", new Date());
+
+        map.put("productId", productId);
+
+        namedParameterJdbcTemplate.update(sql, map);
     }
 }
