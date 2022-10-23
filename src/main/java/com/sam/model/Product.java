@@ -19,4 +19,8 @@ public class Product {
     private Date createdDate;
     private Date lastModifiedDate;
 
+    //timestamp(時間戳）
+    //記錄從英國1970 1/1 凌晨 00:00 到現在的總秒數
+    //全世界的時間不一樣，但timestamp一定一樣
+
 }
