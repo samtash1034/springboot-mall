@@ -93,4 +93,17 @@ public class ProductDaoImpl implements ProductDao {
 
         namedParameterJdbcTemplate.update(sql, map);
     }
+
+    @Override
+    public void deleteProduct(Integer productId) {
+
+        String sql = "delete from product where product_id = :productId";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
+
+        namedParameterJdbcTemplate.update(sql, map);
+        //delete 和 select 都要寫from
+
+    }
 }
