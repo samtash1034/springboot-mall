@@ -1,5 +1,6 @@
 package com.sam.rowmapper;
 
+import com.sam.constant.ProductCategory;
 import com.sam.model.Product;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -14,7 +15,10 @@ public class ProductRowMapper implements RowMapper<Product> {
         Product product = new Product();
         product.setProductId(resultSet.getInt("product_id"));
         product.setProductName(resultSet.getString("product_name"));
-        product.setCategory(resultSet.getString("category"));
+
+        //資料庫 string to enum
+        product.setCategory(ProductCategory.valueOf(resultSet.getString("category")));
+
         product.setImgUrl(resultSet.getString("image_url"));
         product.setPrice(resultSet.getInt("price"));
         product.setStock(resultSet.getInt("stock"));
