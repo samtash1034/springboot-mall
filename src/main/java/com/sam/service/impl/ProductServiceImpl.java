@@ -7,12 +7,19 @@ import com.sam.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
 
     @Autowired
     ProductDao productDao;
+
+    @Override
+    public List<Product> getProducts() {
+        return productDao.getProducts();
+    }
 
     @Override
     public Product getProductById(Integer productId) {
@@ -38,4 +45,6 @@ public class ProductServiceImpl implements ProductService {
 
         productDao.deleteProduct(productId);
     }
+
+
 }

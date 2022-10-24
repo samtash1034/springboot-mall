@@ -4,6 +4,8 @@ import com.sam.dto.ProductRequest;
 import com.sam.model.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 public interface ProductService {
 
     Product getProductById(Integer productId);
@@ -13,5 +15,7 @@ public interface ProductService {
     void updateProduct(Integer productId, ProductRequest productRequest);
 
     void deleteProduct(Integer productId);
+
+    List<Product> getProducts();
 }
 

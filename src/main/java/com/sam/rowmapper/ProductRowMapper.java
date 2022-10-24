@@ -11,6 +11,7 @@ public class ProductRowMapper implements RowMapper<Product> {
 
     @Override
     public Product mapRow(ResultSet resultSet, int i) throws SQLException {
+        //資料庫查出來的(resultSet)存到物件
 
         Product product = new Product();
         product.setProductId(resultSet.getInt("product_id"));

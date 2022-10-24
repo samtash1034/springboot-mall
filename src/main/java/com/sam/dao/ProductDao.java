@@ -3,6 +3,8 @@ package com.sam.dao;
 import com.sam.dto.ProductRequest;
 import com.sam.model.Product;
 
+import java.util.List;
+
 public interface ProductDao {
 
     Product getProductById(Integer id);
@@ -12,5 +14,7 @@ public interface ProductDao {
     void updateProduct(Integer productId, ProductRequest productRequest);
 
     void deleteProduct(Integer productId);
+
+    List<Product> getProducts();
 }
 
