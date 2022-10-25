@@ -1,8 +1,8 @@
 package com.sam.service;
 
+import com.sam.constant.ProductCategory;
 import com.sam.dto.ProductRequest;
 import com.sam.model.Product;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +16,6 @@ public interface ProductService {
 
     void deleteProduct(Integer productId);
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 }
 

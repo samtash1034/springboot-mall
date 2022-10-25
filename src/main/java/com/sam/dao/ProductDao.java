@@ -1,5 +1,6 @@
 package com.sam.dao;
 
+import com.sam.constant.ProductCategory;
 import com.sam.dto.ProductRequest;
 import com.sam.model.Product;
 
@@ -15,6 +16,6 @@ public interface ProductDao {
 
     void deleteProduct(Integer productId);
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category, String search);
 }
 

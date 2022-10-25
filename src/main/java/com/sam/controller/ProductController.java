@@ -1,5 +1,6 @@
 package com.sam.controller;
 
+import com.sam.constant.ProductCategory;
 import com.sam.dto.ProductRequest;
 import com.sam.model.Product;
 import com.sam.service.ProductService;
@@ -19,10 +20,14 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,//category可傳可不傳(required=false)
+            @RequestParam(required = false) String search
+    ){
 
-        List<Product> productList = productService.getProducts();
+        List<Product> productList = productService.getProducts(category, search);
 
+        //productList沒有判斷(列表類型api不管有沒有查到數據都要回200)
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
@@ -30,6 +35,7 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
 
+        //查詢單個都要去判斷，如果查不會則回傳404
         if(product != null){
             return ResponseEntity.status(HttpStatus.OK).body(product);
         }else{
