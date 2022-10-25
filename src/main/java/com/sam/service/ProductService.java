@@ -1,6 +1,6 @@
 package com.sam.service;
 
-import com.sam.constant.ProductCategory;
+import com.sam.dto.ProductQueryParams;
 import com.sam.dto.ProductRequest;
 import com.sam.model.Product;
 
@@ -16,6 +16,6 @@ public interface ProductService {
 
     void deleteProduct(Integer productId);
 
-    List<Product> getProducts(ProductCategory category, String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 }
 

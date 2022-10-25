@@ -1,6 +1,7 @@
 package com.sam.controller;
 
 import com.sam.constant.ProductCategory;
+import com.sam.dto.ProductQueryParams;
 import com.sam.dto.ProductRequest;
 import com.sam.model.Product;
 import com.sam.service.ProductService;
@@ -25,7 +26,12 @@ public class ProductController {
             @RequestParam(required = false) String search
     ){
 
-        List<Product> productList = productService.getProducts(category, search);
+        //參數進階寫法
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         //productList沒有判斷(列表類型api不管有沒有查到數據都要回200)
         return ResponseEntity.status(HttpStatus.OK).body(productList);
