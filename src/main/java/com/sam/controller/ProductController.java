@@ -22,14 +22,21 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(
+            // 查詢條件
             @RequestParam(required = false) ProductCategory category,//category可傳可不傳(required=false)
-            @RequestParam(required = false) String search
+            @RequestParam(required = false) String search,
+
+            // 排序 Sorting
+            @RequestParam(defaultValue = "created_date") String orderBy,
+            @RequestParam(defaultValue = "desc") String sort //使用生序或降序
     ){
 
         //參數進階寫法
         ProductQueryParams productQueryParams = new ProductQueryParams();
         productQueryParams.setCategory(category);
         productQueryParams.setSearch(search);
+        productQueryParams.setOrderBy(orderBy);
+        productQueryParams.setSort(sort);
 
         List<Product> productList = productService.getProducts(productQueryParams);
 
@@ -83,7 +90,7 @@ public class ProductController {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 //        }
 
-        //delete不需要去判斷id是否存在，不存在也要回傳204，因為商品已經不存在了
+        //delete不需要去判斷id是否存在，不存在也要回傳204，因為商品已經不存在了，也算成功
 
         productService.deleteProduct(productId);
 

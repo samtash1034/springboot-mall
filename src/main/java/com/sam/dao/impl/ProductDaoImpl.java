@@ -1,6 +1,5 @@
 package com.sam.dao.impl;
 
-import com.sam.constant.ProductCategory;
 import com.sam.dao.ProductDao;
 import com.sam.dto.ProductQueryParams;
 import com.sam.dto.ProductRequest;
@@ -43,6 +42,10 @@ public class ProductDaoImpl implements ProductDao {
             sql = sql + " AND product_name LIKE :search";//% 不能寫在sql裡面(模糊查詢的%要寫在map裡面)
             map.put("search", "%" + productQueryParams.getSearch() + "%");//:對應的參數 後面對應要傳入的參數
         }
+
+        //order by只能使用字串的拼接（已經有給預設值所以不會是null)
+        //ORDER BY 前後要加上空格！！
+        sql = sql + " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 
