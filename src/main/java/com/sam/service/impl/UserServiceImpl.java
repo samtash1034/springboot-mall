@@ -1,6 +1,7 @@
 package com.sam.service.impl;
 
 import com.sam.dao.UserDao;
+import com.sam.dto.UserLoginRequest;
 import com.sam.dto.UserRegisterRequest;
 import com.sam.model.User;
 import com.sam.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+//判斷邏輯都寫在service，不是dao
 public class UserServiceImpl implements UserService {
 
     private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -37,5 +39,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if(user == null){
+            log.warn("該 email {} 尚未註冊", userLoginRequest.getEmail());
+            throw new  ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if(user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        }else{
+            log.warn("email {} 密碼不正確", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
