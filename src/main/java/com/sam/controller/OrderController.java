@@ -27,6 +27,6 @@ public class OrderController {
 
         Order order = orderService.getOrderById(orderId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 }
