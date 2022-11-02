@@ -5,6 +5,7 @@ import com.sam.dao.ProductDao;
 import com.sam.dao.UserDao;
 import com.sam.dto.BuyItem;
 import com.sam.dto.CreateOrderRequest;
+import com.sam.dto.OrderQueryParams;
 import com.sam.model.Order;
 import com.sam.model.OrderItem;
 import com.sam.model.Product;
@@ -93,5 +94,27 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItemList(orderItemList);
 
         return order;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+
+        //同一個人可能有很多筆訂單
+        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+
+        //每一筆訂單又包含許多定商品資訊
+        for (Order order : orderList) {
+
+            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
+
+            order.setOrderItemList(orderItemList);
+        }
+
+        return orderList;
+    }
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        return orderDao.countOrder(orderQueryParams);
     }
 }
